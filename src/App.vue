@@ -326,7 +326,7 @@ export default {
     left: 0;
     top: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     font-family: sans-serif;
     font-size: 13px;
     padding: 0px;
@@ -335,7 +335,7 @@ export default {
   canvas {
     position: fixed;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     left: 0;
     top: 0;
   }
