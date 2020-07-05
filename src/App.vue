@@ -272,7 +272,6 @@ export default {
         fr.readAsDataURL(file)
         fr.addEventListener('load', () => {
           this.uploadImageUrl = fr.result;
-          this.clearCanvas();
           this.loadImage(this.uploadImageUrl);
           this.fileLoaded = true;
         })
