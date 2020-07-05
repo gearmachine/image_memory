@@ -6,8 +6,7 @@
       dark
     >
     </v-app-bar> -->
-    <div ref="force"></div>
-    <div ref="touches"></div>
+    <!-- <div ref="force"></div>-->
     <canvas ref="image">
     </canvas>
     <canvas ref="circle">
@@ -17,6 +16,7 @@
     </canvas>
 
     <div v-if="!show" style="width: 200px; z-index: 1; position: abusolute">
+      <div ref="touches"></div>
       <v-file-input
         label="手本画像" 
         prepend-icon="mdi-image"
@@ -33,7 +33,7 @@
         label='半径'
         v-model="radius">
       </v-text-field>
-      <v-btn @click="show = !show">隠す</v-btn>
+      <v-btn @click="show = !show">隠す {{debugHeight}}</v-btn>
     </div>
 
   </v-app>
@@ -49,7 +49,7 @@ export default {
   },
   mounted() {
     // const $force = this.$refs.force;
-    // const $touches = this.$refs.touches;
+    const $touches = this.$refs.touches;
     const canvas = this.$refs.canvas;
     if (!canvas || !canvas.getContext) return false;
     const context = canvas.getContext('2d')
@@ -61,6 +61,7 @@ export default {
 
     canvas.width = window.innerWidth * 2
     canvas.height = window.innerHeight * 2
+    this.debugHeight = canvas.height;
 
     const requestIdleCallback = window.requestIdleCallback || function (fn) { setTimeout(fn, 1) };
     for (const ev of ["touchstart", "mousedown"]) {
@@ -135,10 +136,11 @@ export default {
         }
 
         requestIdleCallback(() => {
-          //$force.textContent = 'force = ' + pressure
+          // $force.textContent = 'force = ' + pressure
 
           const touch = e.touches ? e.touches[0] : null
           if (touch) {
+            $touches.innerHTML = `x: ${Math.floor(x)}, y: ${Math.floor(y)}`;
             // $touches.innerHTML = `
             //   touchType = ${touch.touchType} ${touch.touchType === 'direct' ? '👆' : '✍️'} <br/>
             //   radiusX = ${touch.radiusX} <br/>
@@ -198,6 +200,7 @@ export default {
     radius: 250,
     show: false,
     inputImage: null,
+    debugHeight: 0,
     uploadImageUrl: 'https://vignette.wikia.nocookie.net/splatoon/images/7/7f/SSBU_Inkling_Girl.png',
   }),
   methods: {
